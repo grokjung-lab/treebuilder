@@ -150,7 +150,7 @@ const RevenueReport: React.FC<RevenueReportProps> = ({ project, onHighlightNode 
                     <tr key={item.id} className="hover:bg-emerald-50/30 transition-colors group cursor-pointer" onClick={() => onHighlightNode(item.id)}>
                       <td className="p-6 py-5 text-[11px] font-black text-slate-300">{(idx + 1).toString().padStart(2, '0')}</td>
                       <td className="p-6 py-5">
-                        <div className="flex items-center gap-2 text-slate-500 font-mono text-[11px] font-bold bg-slate-100 px-2 py-1 rounded w-fit uppercase">
+                        <div className="flex items-center gap-2 text-orange-600 font-mono text-[11px] font-bold bg-orange-50 px-2 py-1 rounded w-fit uppercase border border-orange-100">
                           {item.recommender || '-'}
                         </div>
                       </td>
