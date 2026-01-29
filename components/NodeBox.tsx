@@ -86,10 +86,10 @@ const NodeBox: React.FC<NodeBoxProps> = ({
             <div className="flex gap-2">
               <button 
                 onClick={onAddChild}
-                className={`p-2 hover:bg-slate-100 rounded-xl transition-colors ${currentTheme.text} bg-slate-50 border border-slate-100`}
+                className={`p-3 hover:bg-slate-100 rounded-2xl transition-all ${currentTheme.text} bg-slate-50 border-2 border-b-4 border-slate-200 border-b-slate-300 hover:border-amber-400 active:translate-y-0.5 active:border-b-2`}
                 title="팀원 추가"
               >
-                <Plus className="w-4 h-4 stroke-[3]" />
+                <Plus className="w-6 h-6 stroke-[3]" />
               </button>
               {!isRoot && (
                 <button 
@@ -117,11 +117,11 @@ const NodeBox: React.FC<NodeBoxProps> = ({
               />
             </div>
 
-            {/* 2. Recommender Input - Updated Font Size and Color to Deep Orange */}
+            {/* 2. Recommender Input - Font size increased from text-sm to text-base */}
             <div className="flex items-center gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 focus-within:bg-white focus-within:border-indigo-300 transition-all">
               <UserPlus className="w-4 h-4 text-slate-400 shrink-0" />
               <input
-                className="w-full text-sm font-mono font-bold outline-none bg-transparent text-orange-600 placeholder:text-slate-300"
+                className="w-full text-base font-mono font-bold outline-none bg-transparent text-orange-600 placeholder:text-slate-300"
                 value={node.employeeId}
                 placeholder="추천인 (Recommender)"
                 onFocus={(e) => handleFocus(e, node.employeeId.startsWith('ID-') ? node.employeeId : '')}

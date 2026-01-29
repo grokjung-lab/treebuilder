@@ -57,11 +57,9 @@ const OrgChart: React.FC<OrgChartProps> = ({
       let rank: string | null = null;
       let rankLevel = 0;
 
-      // 하위 서로 다른 브랜치(좌/우)에서 특정 직급 이상이 있는지 체크
       const countBranchesWithRank = (targetLevel: number) => 
         childMaxRanks.filter(lvl => lvl >= targetLevel).length;
 
-      // S1 ~ S8 직급 판정 로직
       if (childrenSum >= 15000000 && countBranchesWithRank(7) >= 2) { rank = 'S8'; rankLevel = 8; }
       else if (childrenSum >= 5000000 && countBranchesWithRank(6) >= 2) { rank = 'S7'; rankLevel = 7; }
       else if (childrenSum >= 1500000 && countBranchesWithRank(5) >= 2) { rank = 'S6'; rankLevel = 6; }
@@ -136,7 +134,7 @@ const OrgChart: React.FC<OrgChartProps> = ({
     const currentLineColor = themeColors[level % themeColors.length];
 
     return (
-      <div key={nodeId} className={`${treeContainerClass} flex-1 px-4 sm:px-12`}>
+      <div key={nodeId} className={`${treeContainerClass} flex-1 px-2 sm:px-6`}>
         <NodeBox 
           node={node}
           totalValue={metrics.childrenTotal}
@@ -151,12 +149,12 @@ const OrgChart: React.FC<OrgChartProps> = ({
         
         {hasChildren && (
           <div className={treeContainerClass}>
-            <div className={`${currentLineColor} shrink-0 opacity-80 ${isHorizontal ? 'w-32 h-[3px]' : 'h-24 w-[3px]'}`}></div>
+            {/* 부모에서 뻗어나오는 선 (두께 증가: 3px -> 6px) */}
+            <div className={`${currentLineColor} shrink-0 opacity-80 ${isHorizontal ? 'w-12 h-[6px]' : 'h-8 w-[6px]'}`}></div>
             
-            {/* Siblings Container: LTR은 오른쪽 노드가 위로 가도록 flex-col-reverse 적용 */}
             <div className={`flex ${
               isHorizontal 
-                ? (isLTR ? 'flex-col-reverse gap-y-8' : 'flex-col gap-y-8') 
+                ? (isLTR ? 'flex-col-reverse gap-y-4' : 'flex-col gap-y-4') 
                 : 'flex-row gap-x-4'
               } items-stretch w-full relative`}>
               {node.children.map((childId, index) => {
@@ -165,24 +163,24 @@ const OrgChart: React.FC<OrgChartProps> = ({
                 const isOnly = node.children.length === 1;
 
                 return (
-                  <div key={childId} className={`flex-1 flex flex-col items-center relative ${isHorizontal ? 'min-h-[260px] py-4' : 'min-w-[340px] px-4'}`}>
+                  <div key={childId} className={`flex-1 flex flex-col items-center relative ${isHorizontal ? 'min-h-[200px] py-2' : 'min-w-[280px] px-2'}`}>
                     {!isOnly && (
                       <div className={`absolute ${currentLineColor} opacity-80 ${
                         isHorizontal 
-                          ? `w-[3px] ${isLTR ? 'left-0' : 'right-0'} ${
-                              // LTR(역순 정렬) 시 시각적 배치에 따른 연결선 위치 조정
+                          ? `w-[6px] ${isLTR ? 'left-0' : 'right-0'} ${
                               isLTR 
                                 ? (isLast ? 'top-1/2 h-1/2' : isFirst ? 'top-0 h-1/2' : 'top-0 h-full')
                                 : (isFirst ? 'top-1/2 h-1/2' : isLast ? 'top-0 h-1/2' : 'top-0 h-full')
                             }`
-                          : `h-[3px] top-0 ${isFirst ? 'left-1/2 w-1/2' : isLast ? 'right-1/2 w-1/2' : 'left-0 w-full'}`
+                          : `h-[6px] top-0 ${isFirst ? 'left-1/2 w-1/2' : isLast ? 'right-1/2 w-1/2' : 'left-0 w-full'}`
                       }`}></div>
                     )}
                     
                     <div className={`flex items-center justify-center w-full h-full ${
                       isHorizontal ? (isRTL ? 'flex-row-reverse' : 'flex-row') : 'flex-col'
                     }`}>
-                      <div className={`${currentLineColor} shrink-0 opacity-80 ${isHorizontal ? 'w-32 h-[3px]' : 'h-24 w-[3px]'}`}></div>
+                      {/* 자식 노드로 들어가는 선 (두께 증가: 3px -> 6px) */}
+                      <div className={`${currentLineColor} shrink-0 opacity-80 ${isHorizontal ? 'w-12 h-[6px]' : 'h-8 w-[6px]'}`}></div>
                       {renderTree(childId, level + 1)}
                     </div>
                   </div>
